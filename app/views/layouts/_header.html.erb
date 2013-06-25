@@ -1,0 +1,60 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "good principles", root_path, id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Help", help_path %></li>
+          <% if signed_in? %>
+            <li><%= link_to "Users", users_path %></li>
+            <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <%= current_user.name %>&nbsp;&nbsp;&nbsp;<%= gravatar_for current_user, :size => "23x23"%><b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Profile", current_user %></li>
+                <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+                <li class="divider"></li>
+                <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+              </ul>
+            </li>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <script type="text/javascript">
+$().ready(function() {
+	$('.jimgMenu ul').kwicks({max: 310, duration: 300, easing: 'easeOutQuad', complete: 'callback'});
+	});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+
+  // find the elements to be eased and hook the hover event
+  $('div.jimgMenu ul li a').hover(function() {
+    
+    // if the element is currently being animated (to a easeOut)...
+    if ($(this).is(':animated')) {
+      $(this).stop().animate({width: "310px"}, {duration: 450, easing:"easeOutQuad"});
+    } else {
+      // ease in quickly
+      $(this).stop().animate({width: "310px"}, {duration: 400, easing:"easeOutQuad"});
+    }
+  }, function () {
+    // on hovering out, ease the element out
+    if ($(this).is(':animated')) {
+      $(this).stop().animate({width: "100px"}, {duration: 400, easing:"easeInOutQuad"})
+    } else {
+      // ease out slowly
+      $(this).stop('animated:').animate({width: "93px"}, {duration: 450, easing:"easeInOutQuad"});
+    }
+  });
+});
+</script>
+
+
+</header>

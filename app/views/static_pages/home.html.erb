@@ -1,0 +1,35 @@
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+       <%= gravatar_for @user if @user%>
+        <%= @user.name if @user%>
+      </section>
+    </aside>
+    <div class="span7">
+      <h3>Businesses Available To You</h3> 
+    </div>
+    <center><div class="span8 offset2">
+		<div class="jimgMenu">
+ 	 	  <ul>
+    		<li id="entertainment"><a href="#">Entertainment</a></li>
+    		<li id="restaurant"><a href="#">Restaurant</a></li>
+    		<li id="coffeeshop"><a href="#">Coffee Shop</a></li>
+    		<li id="retail"><a href="#">Retail</a></li>
+    		<li id="urban"><a href="#">Urban</a></li>
+  		  </ul>
+		</div>
+  	 </div></center>
+  </div>
+<% else %>  
+<div class="center hero-unit">
+  <h1>Welcome to Good Principles</h1>
+
+  <h2>
+	Good Principles:
+  </h2>
+
+  <%= link_to "Sign up today!", signup_path, class: "btn btn-large btn-primary" %><br><br>
+  <%= link_to "Video Tutorial!", signup_path, class: "btn btn-info" %>
+</div>
+<%end%>
