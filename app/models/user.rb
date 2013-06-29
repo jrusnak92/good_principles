@@ -12,7 +12,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider, :profile_pic
   has_secure_password
 
   before_save { |user| user.email = email.downcase }
@@ -26,9 +26,26 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
   
+  def self.from_omniauth(auth)
+    where(auth.slice(:provider, :uid)).first || createFromOmniAuth(auth)
+  end
+  
+  def self.createFromOmniAuth(auth)
+    create! do |user|
+    	user.provider = auth["provider"]
+    	user.uid = auth["uid"]
+    	user.name = auth["info"]["name"]
+    	user.email = auth["info"]["email"]
+    	user.password = "From Omniauth"
+    	user.password_confirmation = "From Omniauth"
+    	user.profile_pic = auth["info"]["image"]
+    end
+  end
+  
   private
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
   end
+  
 end
