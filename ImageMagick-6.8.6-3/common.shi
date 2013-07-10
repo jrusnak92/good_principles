@@ -1,0 +1,21 @@
+# Test environment
+top_srcdir='/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3'
+top_builddir='/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3'
+
+set -a
+COMPARE="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/compare"
+COMPOSITE="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/composite"
+CONJURE="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/conjure"
+CONVERT="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/convert"
+DISPLAY="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/display"
+IDENTIFY="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/identify"
+MONTAGE="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities/montage" 
+VALIDATE="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/tests/validate"
+DRAWTEST="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/tests/drawtest"
+WANDTEST="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/tests/wandtest"
+LD_LIBRARY_PATH="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/magick/.libs:${LD_LIBRARY_PATH}"
+MAGICK_CODER_MODULE_PATH="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/coders"
+MAGICK_CONFIGURE_PATH="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/config:/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/config"
+MAGICK_FILTER_MODULE_PATH="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/filters"
+PATH="/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/utilities:/Users/jrusnak/rails_project/good_principles/ImageMagick-6.8.6-3/tests:${PATH}"
+set +a

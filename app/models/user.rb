@@ -12,8 +12,23 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider, :profile_pic
+  require "open-uri"
+  attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider, :profile_pic 
+  has_attached_file :profile_pic,
+                  :styles => { :small => "150x150>" },
+                  :url  => "/assets/products/:id/:style/:basename.:extension",
+                  :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
+
+  #validates_attachment_presence :photo
+  #validates_attachment_size :photo, :less_than => 5.megabytes
+  #validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
+  
+  attr_accessor :profile_pic_file_name
+  attr_accessor :profile_pic_content_type
+  attr_accessor :profile_pic_file_size
+  attr_accessor :profile_pic_updated_at
   has_secure_password
+
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -30,6 +45,22 @@ class User < ActiveRecord::Base
     where(auth.slice(:provider, :uid)).first || createFromOmniAuth(auth)
   end
   
+  def picture_from_url(url)
+    extname = File.extname(url)
+    basename = File.basename(url, extname)
+
+    file = Tempfile.new([basename, extname])
+    file.binmode
+
+    open(URI.parse(url)) do |data|  
+      file.write data.read
+    end
+
+    file.rewind
+
+    self.profile_pic = file
+  end
+  
   def self.createFromOmniAuth(auth)
     create! do |user|
     	user.provider = auth["provider"]
@@ -38,7 +69,8 @@ class User < ActiveRecord::Base
     	user.email = auth["info"]["email"]
     	user.password = "From Omniauth"
     	user.password_confirmation = "From Omniauth"
-    	user.profile_pic = auth["info"]["image"]
+    	fb_url = "http://graph.facebook.com/#{user.uid}/picture?type=square"
+    	user.picture_from_url fb_url
     end
   end
   

@@ -1,10 +1,7 @@
 class UsersController < ApplicationController
 
 def home
-    if signed_in?
 
-      
-    end
   end
 
   before_filter :signed_in_user,
@@ -18,7 +15,6 @@ def home
 
   def show
     @user = User.find(params[:id])
-
   end
 
   def new
