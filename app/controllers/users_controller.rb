@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-def home
+  def home
 
   end
 
@@ -8,6 +8,11 @@ def home
                 only: [:index, :edit, :update, :destroy]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
+
+  def download
+    @file_object = FileObject.find(params[:id])
+    redirect_to(@file_object.attachment.expiring_url(10))
+  end
 
   def index
     @users = User.paginate(page: params[:page])

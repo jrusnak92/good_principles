@@ -14,19 +14,12 @@
 class User < ActiveRecord::Base
   require "open-uri"
   attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider, :profile_pic 
-  has_attached_file :profile_pic,
-                  :styles => { :small => "150x150>" },
-                  :url  => "/assets/products/:id/:style/:basename.:extension",
-                  :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
-
-  #validates_attachment_presence :photo
-  #validates_attachment_size :photo, :less_than => 5.megabytes
-  #validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
-  
   attr_accessor :profile_pic_file_name
-  attr_accessor :profile_pic_content_type
-  attr_accessor :profile_pic_file_size
-  attr_accessor :profile_pic_updated_at
+  has_attached_file :profile_pic, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>'
+  }
   has_secure_password
 
 
