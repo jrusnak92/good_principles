@@ -13,13 +13,8 @@
 
 class User < ActiveRecord::Base
   require "open-uri"
-  attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider, :profile_pic 
-  attr_accessor :profile_pic_file_name
-  has_attached_file :profile_pic, styles: {
-    thumb: '100x100>',
-    square: '200x200#',
-    medium: '300x300>'
-  }
+  attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider
+
   has_secure_password
 
 
@@ -36,22 +31,6 @@ class User < ActiveRecord::Base
   
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first || createFromOmniAuth(auth)
-  end
-  
-  def picture_from_url(url)
-    extname = File.extname(url)
-    basename = File.basename(url, extname)
-
-    file = Tempfile.new([basename, extname])
-    file.binmode
-
-    open(URI.parse(url)) do |data|  
-      file.write data.read
-    end
-
-    file.rewind
-
-    self.profile_pic = file
   end
   
   def self.createFromOmniAuth(auth)
