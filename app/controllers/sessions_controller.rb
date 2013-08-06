@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def new
-  
+     @title = "Sign in"
   end
 
   def create
@@ -16,7 +16,6 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
     sign_out
     redirect_to root_path, :notice => "Signed out!"
   end

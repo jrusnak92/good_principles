@@ -12,14 +12,14 @@
 #
 
 class User < ActiveRecord::Base
-  require "open-uri"
   attr_accessible :name, :email, :password, :password_confirmation, :uid, :provider
-
   has_secure_password
 
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
+  before_save {|user| user.uid = "1"}
+  before_save {|user| user.provider = "gp"}
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -42,7 +42,6 @@ class User < ActiveRecord::Base
     	user.password = "From Omniauth"
     	user.password_confirmation = "From Omniauth"
     	fb_url = "http://graph.facebook.com/#{user.uid}/picture?type=square"
-    	user.picture_from_url fb_url
     end
   end
   
