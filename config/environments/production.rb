@@ -5,8 +5,8 @@ GoodPrinciples::Application.configure do
     :storage => :s3,
     :s3_credentials => {
       :bucket => ENV['goodprinciples'],
-      :access_key_id => ENV['AKIAIU2SMXLRU2MAJDBQ'],
-      :secret_access_key => ENV['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']
+      :access_key_id => ENV[],
+      :secret_access_key => ENV[]
     }
   }
   # Code is not reloaded between requests
